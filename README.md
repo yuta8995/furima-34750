@@ -1,24 +1,66 @@
-# README
+# テーブル設計
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## users テーブル
 
-Things you may want to cover:
+| Column          | Type    | Options     |
+| --------------- | ------- | ----------- |
+| nickname        | string  | null: false |
+| email           | string  | null: false |
+| password        | string  | null: false |
+| last_name       | string  | null: false |
+| first_name      | string  | null: false |
+| last_name_kana  | string  | null: false |
+| first_name_kana | string  | null: false |
+| birthday        | integer | null: false |
 
-* Ruby version
+### Association
 
-* System dependencies
+- has_many :items
+- has_many :buyers
 
-* Configuration
+## items テーブル
 
-* Database creation
+| Column           | Type       | Options     |
+| ---------------- | ---------- | ----------- |
+| item_image       | text       | null: false |
+| item_name        | text       | null: false |
+| item_description | text       | null: false |
+| category         | string     | null: false |
+| item_condition   | string     | null: false |
+| shipping_paid_by | string     | null: false |
+| item_location    | string     | null: false |
+| shipping_date    | integer    | null: false |
+| seller           | string     | null: false |
+| user             | references |             |
 
-* Database initialization
+### Association
 
-* How to run the test suite
+- belongs_to :user
+- has_one    :buyer
 
-* Services (job queues, cache servers, search engines, etc.)
+## buyers テーブル
 
-* Deployment instructions
+| Column     | Type       | Options     |
+| ---------- | ---------- | ----------- |
+| buyer_name | string     | null: false |
+| user       | references |             |
 
-* ...
+### Association
+
+- belongs_to :user
+- has_one    :item
+- has_one    :ship
+
+## ships テーブル
+
+| Column       | Type    | Options     |
+| ------------ | ------- | ----------- |
+| postal_code  | integer | null: false |
+| prefecture   | string  | null: false |
+| municipality | string  | null: false |
+| address      | text    | null: false |
+| tel          | integer | null: false |
+
+### Association
+
+- has_one    :buyer
