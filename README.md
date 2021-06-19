@@ -48,18 +48,17 @@
 
 - belongs_to :user
 - belongs_to :item
-- has_one    :ship
+- has_one    :address
 
-## ships テーブル
+## addresses テーブル
 
 | Column           | Type       | Options           |
 | ---------------- | ---------- | ----------------- |
-| card_number      | integer    | null: false       |
 | postal_code      | string     | null: false       |
 | item_location_id | integer    | null: false       |
 | municipality     | string     | null: false       |
-| address          | string     | null: false       |
-| tel              | integer    | null: false       |
+| building_name    | string     |                   |
+| tel              | string     | null: false       |
 | buyer            | references | foreign_key: true |
 
 ### Association
