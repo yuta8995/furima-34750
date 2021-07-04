@@ -53,8 +53,16 @@ RSpec.describe Item, type: :model do
       expect(@item.errors.full_messages).to include("Shipping date can't be blank")
     end
 
-    # it "販売価格が空では出品できないこと" do
+    # it "販売価格が空では出品できない" do
+      # @item.price = nil
+      # @item.valid?
+      # expect(@item.errors.full_messsages).to include("Price can't be blank")
     # end
 
+    # it "販売価格が全角数字では出品できない" do
+      # @item.price = "９９９９"
+      # @item.valid?
+      # expect(@item.errors.full_messsages).to include("Price is invalid. Input half-width characters")
+    # end
   end
 end
