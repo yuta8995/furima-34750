@@ -11,7 +11,7 @@ class Item < ApplicationRecord
   belongs_to :shipping_date
 
   with_options presence: true do
-    validates :item_name, :item_description, :price
+    validates :image, :item_name, :item_description, :price
   end
 
   validates :category_id, :item_condition_id, :shipping_paid_by_id, :item_location_id, 
