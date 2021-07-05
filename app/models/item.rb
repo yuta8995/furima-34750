@@ -13,9 +13,8 @@ class Item < ApplicationRecord
   with_options presence: true do
     validates :image, :item_name, :item_description
 
-    with_options format: { with: /\A[0-9]+\z/i, message: "is invalid. Input half-width characters"} do
-      validates :price
-    end
+    validates :price, format: { with: /\A[0-9]+\z/, message: "is invalid. Input half-width characters"},
+    numericality: {greater_than_or_equal_to: 300, less_than_or_equal_to: 9999999, message: "is out of setting range"}
   end
 
   validates :category_id, :item_condition_id, :shipping_paid_by_id, :item_location_id, 
