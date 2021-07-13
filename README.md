@@ -57,6 +57,7 @@
 | postal_code      | string     | null: false       |
 | item_location_id | integer    | null: false       |
 | municipality     | string     | null: false       |
+| house_number     | string     | null: false       |
 | building_name    | string     |                   |
 | tel              | string     | null: false       |
 | buyer            | references | foreign_key: true |
