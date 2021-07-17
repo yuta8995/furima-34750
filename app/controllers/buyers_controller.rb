@@ -10,8 +10,9 @@ class BuyersController < ApplicationController
   def create
     @buyer_address = BuyerAddress.new(buyer_params)
     if @buyer_address.valid?
+      pay_item
       @buyer_address.save
-      redirect_to root_path
+      return redirect_to root_path
     else
       render :index
     end
@@ -20,11 +21,20 @@ class BuyersController < ApplicationController
   private
 
   def buyer_params
-    params.require(:buyer_address).permit(:postal_code, :item_location_id, :municipality, :house_number, :building_name, :tel).merge(user_id: current_user.id, item_id: @item.id)
+    params.require(:buyer_address).permit(:postal_code, :item_location_id, :municipality, :house_number, :building_name, :tel).merge(user_id: current_user.id, item_id: params[:item_id], token: params[:token])
   end
 
   def set_item
     @item = Item.find(params[:item_id])
+  end
+
+  def pay_item
+    Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
+    Payjp::Charge.create(
+      amount: @item.price,           # 商品の値段
+      card: buyer_params[:token],    # カードトークン
+      currency: 'jpy'                # 通貨の種類（日本円）
+      )
   end
 
   def move_to_index
