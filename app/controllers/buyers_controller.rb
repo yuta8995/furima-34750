@@ -1,6 +1,6 @@
 class BuyersController < ApplicationController
   before_action :set_item, only: [:index, :create]
-  before_action :authenticate_user!, only: :index
+  before_action :authenticate_user!
   before_action :move_to_index, only: [:index, :create]
 
   def index
@@ -31,14 +31,14 @@ class BuyersController < ApplicationController
   def pay_item
     Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
     Payjp::Charge.create(
-      amount: @item.price,           # 商品の値段
-      card: buyer_params[:token],    # カードトークン
-      currency: 'jpy'                # 通貨の種類（日本円）
+      amount: @item.price,
+      card: buyer_params[:token],
+      currency: 'jpy'
       )
   end
 
   def move_to_index
-    if current_user == @item.user
+    if current_user == @item.user || @item.order.present?
       redirect_to root_path
     end
   end
