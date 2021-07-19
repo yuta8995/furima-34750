@@ -39,14 +39,30 @@ RSpec.describe BuyerAddress, type: :model do
         expect(@buyer_address.errors.full_messages).to include("Item location can't be blank")
       end
 
+      it "市区町村が空では保存できないこと" do
+        @buyer_address.municipality = ''
+        @buyer_address.valid?
+        expect(@buyer_address.errors.full_messages).to include("Municipality can't be blank")
+      end
+
       it "番地が空では保存できないこと" do
         @buyer_address.house_number = ''
         @buyer_address.valid?
         expect(@buyer_address.errors.full_messages).to include("House number can't be blank")
       end
 
-      it "電話番号は11桁以内の数値のみ保存可能なこと" do
+      it "電話番号が空では保存できないこと" do
+        @buyer_address.tel = ''
+        @buyer_address.valid?
+        expect(@buyer_address.errors.full_messages).to include("Tel can't be blank")
+      end
+      it "電話番号が12桁以上の数値では保存できないこと" do
         @buyer_address.tel = '080123456789'
+        @buyer_address.valid?
+        expect(@buyer_address.errors.full_messages).to include("Tel is invalid. Input only number")
+      end
+      it "英数字混合では登録できないこと" do
+        @buyer_address.tel = 'tel08012345'
         @buyer_address.valid?
         expect(@buyer_address.errors.full_messages).to include("Tel is invalid. Input only number")
       end

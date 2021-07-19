@@ -1,7 +1,7 @@
 class BuyersController < ApplicationController
-  before_action :set_item, only: [:index, :create]
+  before_action :set_item
   before_action :authenticate_user!
-  before_action :move_to_index, only: [:index, :create]
+  before_action :move_to_index
 
   def index
     @buyer_address = BuyerAddress.new
